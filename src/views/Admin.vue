@@ -64,7 +64,7 @@
                                 <span class="menu-text">Orders</span>
                             </router-link>
 
-                            <a href="#">
+                            <a href="#" @click="logout()">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                                 <span class="menu-text">Logout</span>
                             </a>
@@ -87,11 +87,21 @@
 <script>
 // @ is an alias to /src
 import Hero from "@/components/Hero.vue";
+import {fb} from '../firebase';
 export default {
   name: "admin",
   methods:{
       closeMenu(){
         $(".page-wrapper").toggleClass("toggled");
+      },
+      logout(){
+          fb.auth().signOut()
+          .then(() => {
+              this.$router.replace('/');
+          })
+          .catch((err) => {
+              console.log(err);
+          });
       }
   }
 };
